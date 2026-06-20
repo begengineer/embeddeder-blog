@@ -1,0 +1,51 @@
+---
+title: "Rust と C の相互運用（FFI）入門"
+date: "2026-06-18"
+description: "既存のC資産を活かしながらRustを段階的に導入するためのFFIの基礎と、安全に扱うためのポイントをまとめました。"
+tags: ["Rust", "C言語", "FFI"]
+---
+
+組み込み・システムプログラミングの現場では、既存の C 資産を活かしながら
+Rust を部分的に導入したいケースが増えています。
+
+## extern "C" でインターフェースを定義する
+
+Rust から C 関数を呼び出すには `extern "C"` ブロックで宣言します。
+
+```rust
+extern "C" {
+    fn adc_read(channel: u8) -> u16;
+}
+
+fn read_voltage(channel: u8) -> f32 {
+    let raw = unsafe { adc_read(channel) };
+    (raw as f32) * 3.3 / 4096.0
+}
+```
+
+## C 側から Rust 関数を呼び出す
+
+逆に Rust 側の関数を C から呼べるようにするには `#[no_mangle]` を付与します。
+
+```rust
+#[no_mangle]
+pub extern "C" fn checksum(data: *const u8, len: usize) -> u8 {
+    let slice = unsafe { std::slice::from_raw_parts(data, len) };
+    slice.iter().fold(0u8, |acc, &b| acc ^ b)
+}
+```
+
+### unsafe の範囲を最小化する
+
+`unsafe` ブロックは必要最小限にとどめ、ポインタの妥当性チェックは
+可能な限り安全な Rust コードの中で行うのが定石です。
+
+## ビルド設定
+
+`cbindgen` を使うと Rust の公開 API から C ヘッダを自動生成でき、
+ヘッダの手書き同期によるバグを防げます。
+
+## まとめ
+
+FFI 境界は最もバグが混入しやすい場所です。型の対応関係とライフタイムを
+意識しながら、段階的に Rust 化を進めるのが安全です。

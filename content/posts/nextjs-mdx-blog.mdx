@@ -1,0 +1,53 @@
+---
+title: "Next.js と MDX で技術ブログを構築する"
+date: "2026-06-01"
+description: "Next.js App Router と MDX を組み合わせて、シンタックスハイライトや目次自動生成を備えた技術ブログを構築する方法を紹介します。"
+tags: ["Next.js", "MDX", "Web開発"]
+---
+
+このブログは Next.js の App Router と MDX を使って構築されています。
+この記事では、その構成のポイントを紹介します。
+
+## なぜ Next.js + MDX なのか
+
+Markdown ファイルをそのままコンテンツとして管理できるため、
+記事の執筆に専用の CMS を必要としません。Git でバージョン管理できるのも大きな利点です。
+
+### 静的生成との相性
+
+`generateStaticParams` を使うことで、ビルド時に全記事を静的ページとして書き出せます。
+これにより配信が高速になり、SEO にも有利です。
+
+## シンタックスハイライト
+
+`rehype-pretty-code` と Shiki を組み合わせることで、エディタ相当のハイライトを実現しています。
+
+```ts
+type Post = {
+  slug: string;
+  title: string;
+  tags: string[];
+};
+
+function formatTitle(post: Post): string {
+  return `${post.title} (#${post.tags.join(", ")})`;
+}
+```
+
+```c
+#include <stdio.h>
+
+int main(void) {
+    printf("Hello, embedded world!\n");
+    return 0;
+}
+```
+
+## 目次の自動生成
+
+見出し（`##` / `###`）を解析して目次を自動生成しています。
+`github-slugger` を使うことで、見出しの ID とリンク先を一致させています。
+
+## まとめ
+
+Next.js + MDX は、軽量かつ拡張性の高い技術ブログ基盤として非常に優れた選択肢です。
