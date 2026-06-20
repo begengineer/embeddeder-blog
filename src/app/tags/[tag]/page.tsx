@@ -30,15 +30,15 @@ export default async function TagPage({ params }: PageProps) {
   if (posts.length === 0) notFound();
 
   return (
-    <section className="mx-auto max-w-5xl px-6 py-16">
-      <p className="text-sm font-semibold uppercase tracking-widest text-violet-600 dark:text-violet-400">
+    <section className="mx-auto max-w-2xl px-6 py-10">
+      <p className="text-xs font-semibold uppercase tracking-widest text-neutral-400 dark:text-neutral-500">
         Tag
       </p>
-      <h1 className="mt-2 text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+      <h1 className="mt-1 text-2xl font-bold tracking-tight text-neutral-900 dark:text-white">
         #{decodedTag}
       </h1>
 
-      <div className="mt-8 grid gap-6 sm:grid-cols-2">
+      <div className="mt-6 divide-y divide-neutral-200 dark:divide-neutral-800">
         {posts.map((post) => (
           <PostCard key={post.slug} post={post} />
         ))}

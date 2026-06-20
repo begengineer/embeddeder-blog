@@ -10,8 +10,11 @@ export type PostFrontmatter = {
   date: string;
   description: string;
   tags: string[];
+  emoji?: string;
   draft?: boolean;
 };
+
+const DEFAULT_EMOJI = "📝";
 
 export type PostMeta = PostFrontmatter & {
   slug: string;
@@ -40,6 +43,7 @@ function readPost(slug: string): Post {
   return {
     ...frontmatter,
     tags: frontmatter.tags ?? [],
+    emoji: frontmatter.emoji ?? DEFAULT_EMOJI,
     slug,
     readingMinutes: Math.max(1, Math.ceil(stats.minutes)),
     content,
@@ -62,6 +66,7 @@ export function getAllPostMetas(): PostMeta[] {
     date: post.date,
     description: post.description,
     tags: post.tags,
+    emoji: post.emoji,
     draft: post.draft,
     readingMinutes: post.readingMinutes,
   }));

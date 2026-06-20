@@ -14,7 +14,7 @@ export function AffiliateLink({ href, children }: AffiliateLinkProps) {
       href={href}
       target="_blank"
       rel="sponsored noopener noreferrer"
-      className="font-medium text-violet-600 underline decoration-violet-300 underline-offset-2 hover:text-violet-700 dark:text-violet-400 dark:decoration-violet-700"
+      className="font-medium text-neutral-900 underline decoration-neutral-400 underline-offset-2 hover:decoration-neutral-900 dark:text-white dark:decoration-neutral-600 dark:hover:decoration-white"
     >
       {children}
     </a>

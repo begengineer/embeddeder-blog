@@ -28,7 +28,7 @@ export function ThemeToggle() {
       type="button"
       onClick={() => setTheme(isDark ? "light" : "dark")}
       aria-label="テーマを切り替える"
-      className="flex h-9 w-9 items-center justify-center rounded-full border border-black/10 bg-white/60 text-slate-700 backdrop-blur transition hover:border-violet-300 hover:text-violet-600 dark:border-white/10 dark:bg-white/5 dark:text-slate-200 dark:hover:border-violet-400 dark:hover:text-violet-300"
+      className="flex h-9 w-9 items-center justify-center rounded-full border border-neutral-200 text-neutral-600 transition hover:border-neutral-900 hover:text-neutral-900 dark:border-neutral-800 dark:text-neutral-300 dark:hover:border-white dark:hover:text-white"
     >
       {isDark ? (
         <svg

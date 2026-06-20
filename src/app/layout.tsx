@@ -66,7 +66,7 @@ export default function RootLayout({
       suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="flex min-h-full flex-col bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+      <body className="flex min-h-full flex-col bg-white text-neutral-900 dark:bg-neutral-950 dark:text-neutral-100">
         <AdsenseScript />
         <JsonLd
           data={{
@@ -79,7 +79,6 @@ export default function RootLayout({
           }}
         />
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <div className="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_top,#ddd6fe,transparent_55%)] dark:bg-[radial-gradient(circle_at_top,#2e1065,transparent_55%)]" />
           <SiteHeader />
           <main className="flex-1">{children}</main>
           <SiteFooter />

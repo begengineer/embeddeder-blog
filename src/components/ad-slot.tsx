@@ -36,7 +36,7 @@ export function AdSlot({ slot, label = "広告", className }: AdSlotProps) {
 
   return (
     <div className={className}>
-      <p className="mb-1 text-center text-[10px] uppercase tracking-widest text-slate-400 dark:text-slate-500">
+      <p className="mb-1 text-center text-[10px] uppercase tracking-widest text-neutral-400 dark:text-neutral-500">
         {label}
       </p>
       <ins

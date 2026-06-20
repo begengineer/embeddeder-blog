@@ -4,7 +4,7 @@ import { getAllSlugs, getPostBySlug } from "@/lib/posts";
 import { extractToc } from "@/lib/toc";
 import { renderMdx } from "@/lib/mdx";
 import { formatDate } from "@/lib/format";
-import { TagPill } from "@/components/tag-pill";
+import Link from "next/link";
 import { TableOfContents } from "@/components/table-of-contents";
 import { JsonLd } from "@/components/json-ld";
 import { AdSlot } from "@/components/ad-slot";
@@ -59,7 +59,7 @@ export default async function PostPage({ params }: PageProps) {
   const toc = extractToc(post.content);
 
   return (
-    <article className="mx-auto max-w-5xl px-6 py-16">
+    <article className="mx-auto max-w-4xl px-6 py-12">
       <JsonLd
         data={{
           "@context": "https://schema.org",
@@ -74,33 +74,41 @@ export default async function PostPage({ params }: PageProps) {
           mainEntityOfPage: `${siteConfig.url}/posts/${post.slug}`,
         }}
       />
-      <header className="mb-10 text-center">
-        <div className="flex items-center justify-center gap-3 text-xs text-slate-500 dark:text-slate-400">
+      <header className="mb-10 border-b border-neutral-200 pb-8 dark:border-neutral-800">
+        <span
+          aria-hidden="true"
+          className="flex h-14 w-14 items-center justify-center rounded-lg border border-neutral-200 bg-neutral-50 text-3xl dark:border-neutral-800 dark:bg-neutral-900"
+        >
+          {post.emoji}
+        </span>
+        <h1 className="mt-4 text-2xl font-bold tracking-tight text-neutral-900 sm:text-3xl dark:text-white">
+          {post.title}
+        </h1>
+        <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-neutral-500 dark:text-neutral-400">
           <time dateTime={post.date}>{formatDate(post.date)}</time>
           <span aria-hidden="true">·</span>
           <span>{post.readingMinutes} 分で読了</span>
+          {post.tags.map((tag) => (
+            <Link
+              key={tag}
+              href={`/tags/${encodeURIComponent(tag)}`}
+              className="hover:text-neutral-900 hover:underline dark:hover:text-white"
+            >
+              #{tag}
+            </Link>
+          ))}
         </div>
-        <h1 className="mt-3 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl dark:text-white">
-          {post.title}
-        </h1>
-        {post.tags.length > 0 && (
-          <div className="mt-4 flex flex-wrap justify-center gap-2">
-            {post.tags.map((tag) => (
-              <TagPill key={tag} tag={tag} />
-            ))}
-          </div>
-        )}
       </header>
 
       {adsenseEnabled && (
-        <div className="mx-auto mb-8 max-w-3xl">
+        <div className="mb-8">
           <AdDisclosure />
         </div>
       )}
 
-      <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_240px]">
+      <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_220px]">
         <div>
-          <div className="prose prose-slate max-w-none dark:prose-invert prose-headings:scroll-mt-24 prose-pre:rounded-xl prose-a:text-violet-600 dark:prose-a:text-violet-400">
+          <div className="prose prose-neutral max-w-none dark:prose-invert prose-headings:scroll-mt-24 prose-pre:rounded-xl prose-a:text-neutral-900 dark:prose-a:text-white">
             {renderMdx(post.content)}
           </div>
 
